@@ -1,18 +1,24 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
-const projects = require('./Routes/projects')
-const login = require('./Routes/login')
+const projects = require('./routes/projects')
+const login = require('./routes/login')
+const searchProjects = require('./routes/searchProjects')
+const register = require('./routes/register')
+
+const port = process.env.PORT || 3001
 
 app.use(cors())
 
 app.use('/projects', projects)
 app.use('/login', login)
+app.use('/search-projects', searchProjects)
+app.use('/register', register)
 
 app.use(function (req, res) {
   res.send(404)
 })
 
-app.listen(7542, function () {
-  console.log('Example app listening on port 7542!')
+app.listen(app.listen(port), function () {
+  console.log(`Example app listening on port ${port}!`)
 })
