@@ -19,6 +19,6 @@ app.use(function (req, res) {
   res.send(404)
 })
 
-app.listen(app.listen(port), function () {
+app.listen(port, function () {
   console.log(`Example app listening on port ${port}!`)
 })
