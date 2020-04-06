@@ -1,13 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const bodyParser = require('body-parser')
 const fsp = require('fs').promises
 const bcrypt = require('bcryptjs')
 
 const saltRounds = 10
-
-router.use(bodyParser.urlencoded({ extended: false }))
-router.use(bodyParser.json())
 
 router.post('/', async (req, res) => {
   try {
@@ -20,7 +16,7 @@ router.post('/', async (req, res) => {
       password: hash
     })
     await fsp.writeFile('registeredUsers.json', JSON.stringify(users))
-    res.status(200).send({ status: 'success' })
+    res.status(200).json({ status: 'success' })
   } catch (error) {
     console.log(error)
   }
