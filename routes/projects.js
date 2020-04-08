@@ -1,25 +1,21 @@
 const express = require('express')
 const router = express.Router()
-const fsp = require('fs').promises
 
 router.get('/', async (req, res) => {
   try {
     const { value } = req.query
-    const data = await fsp.readFile('projects.json')
+    const data = await require('../projects.json')
+    let springProject = data.springProjects
+    let springAtticProject = data.springAtticProjects
     if (value) {
       const search = new RegExp(value, 'i')
-      const filteredSpringProject = JSON.parse(data.toString()).springProjects.filter((el) => search.test(el.title))
-      const filteredSpringAtticProject = JSON.parse(data.toString()).springAtticProjects.filter((el) => search.test(el.title))
-      res.json({
-        springProjects: filteredSpringProject,
-        springAtticProjects: filteredSpringAtticProject
-      })
-    } else {
-      res.json({
-        springProjects: JSON.parse(data.toString()).springProjects,
-        springAtticProjects: JSON.parse(data.toString()).springAtticProjects
-      })
+      springProject = data.springProjects.filter((el) => search.test(el.title))
+      springAtticProject = data.springAtticProjects.filter((el) => search.test(el.title))
     }
+    res.json({
+      springProjects: springProject,
+      springAtticProjects: springAtticProject
+    })
   } catch (error) {
     console.log(error)
   }
