@@ -9,8 +9,8 @@ router.get('/', async (req, res) => {
     let springAtticProject = data.springAtticProjects
     if (value) {
       const search = new RegExp(value, 'i')
-      springProject = data.springProjects.filter((el) => search.test(el.title))
-      springAtticProject = data.springAtticProjects.filter((el) => search.test(el.title))
+      springProject = springProject.filter((el) => search.test(el.title))
+      springAtticProject = springAtticProject.filter((el) => search.test(el.title))
     }
     res.json({
       springProjects: springProject,
