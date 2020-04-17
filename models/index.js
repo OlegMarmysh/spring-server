@@ -3,17 +3,17 @@ const configProduction = require('../config/db.config').production
 const Sequelize = require('sequelize')
 let sequelize = null
 
-if (configProduction.use_env_variable) {
-  sequelize = new Sequelize(process.env[configProduction.use_env_variable],
+if (process.env.DATABSE_URL) {
+  sequelize = new Sequelize(process.env.DATABSE_URL,
     {
       dialect: configProduction.dialect,
       protocol: configProduction.protocol,
-      logging: true
+      logging: configProduction.logging
     })
 } else {
   sequelize = new Sequelize(configDevelopment.DB, configDevelopment.USER, configDevelopment.PASSWORD, {
     host: configDevelopment.HOST,
-    dialect: configDevelopment.dialect
+    dialect: configDevelopment.dialect,
   })
 }
 
