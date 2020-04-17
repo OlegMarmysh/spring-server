@@ -6,6 +6,7 @@ const login = require('./routes/login')
 const register = require('./routes/register')
 const bodyParser = require('body-parser')
 const middleware = require('./middlewars/checkToken')
+const db = require('./models')
 
 const port = process.env.PORT || 3001
 
@@ -20,6 +21,8 @@ app.use(function (req, res) {
   res.send(404)
 })
 
-app.listen(port, function () {
-  console.log(`Example app listening on port ${port}!`)
+db.sequelize.sync().then(() => {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}!`)
+  })
 })
