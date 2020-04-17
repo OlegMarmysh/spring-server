@@ -3,26 +3,17 @@ const configProduction = require('../config/db.config').production
 const Sequelize = require('sequelize')
 let sequelize = null
 
-if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
-  sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL,
+if (configProduction.use_env_variable) {
+  sequelize = new Sequelize(process.env[configProduction.use_env_variable],
     {
       dialect: configProduction.dialect,
       protocol: configProduction.protocol,
-      port: configProduction.port,
-      host: configProduction.host,
       logging: true
     })
 } else {
   sequelize = new Sequelize(configDevelopment.DB, configDevelopment.USER, configDevelopment.PASSWORD, {
     host: configDevelopment.HOST,
-    dialect: configDevelopment.dialect,
-
-    pool: {
-      max: configDevelopment.pool.max,
-      min: configDevelopment.pool.min,
-      acquire: configDevelopment.pool.acquire,
-      idle: configDevelopment.pool.idle
-    }
+    dialect: configDevelopment.dialect
   })
 }
 
