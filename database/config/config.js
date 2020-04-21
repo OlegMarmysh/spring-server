@@ -1,9 +1,10 @@
 module.exports = {
   development: {
-    HOST: 'localhost',
-    USER: 'postgres',
-    PASSWORD: 'JKtu27133',
-    DB: 'spring',
+    host: '127.0.0.1',
+    username: 'postgres',
+    password: null,
+    database: 'spring',
+    port: 5432,
     dialect: 'postgres'
   },
   production: {
