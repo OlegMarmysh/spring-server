@@ -7,7 +7,6 @@ const basename = path.basename(__filename)
 
 let sequelize
 const db = {}
-const DB_URL = `postgres://${configDevelopment.username}:${configDevelopment.password}@${configDevelopment.host}/${configDevelopment.database}`
 
 if (process.env.DATABSE_URL) {
   sequelize = new Sequelize(process.env.DATABSE_URL,
@@ -17,6 +16,7 @@ if (process.env.DATABSE_URL) {
       logging: configProduction.logging
     })
 } else {
+  const DB_URL = `postgres://${configDevelopment.username}:${configDevelopment.password}@${configDevelopment.host}/${configDevelopment.database}`
   sequelize = new Sequelize(DB_URL,
     {
       dialect: configDevelopment.dialect,
@@ -33,8 +33,5 @@ fs
     const model = sequelize.import(path.join(__dirname, file))
     db[model.name] = model
   })
-
-db.sequelize = sequelize
-db.Sequelize = Sequelize
 
 module.exports = db

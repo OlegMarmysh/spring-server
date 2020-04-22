@@ -1,7 +1,7 @@
 const db = require('../models')
 
 class UserService {
-  static async addUser (user) {
+  async addUser (user) {
     try {
       return await db.User.create(user)
     } catch (error) {
@@ -9,7 +9,7 @@ class UserService {
     }
   }
 
-  static async getUser (login) {
+  async getUser (login) {
     try {
       return await db.User.findOne({ where: { login } })
     } catch (error) {
@@ -18,4 +18,6 @@ class UserService {
   }
 }
 
-module.exports = UserService
+const userService = new UserService()
+
+module.exports = userService

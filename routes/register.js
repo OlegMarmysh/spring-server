@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { validationResult } = require('express-validator')
 const registerValidator = require('../validators/registerValidator')
-const UserService = require('../database/services/userService')
+const userService = require('../database/services/userService')
 const bcrypt = require('bcryptjs')
 
 const saltRounds = 10
@@ -15,7 +15,7 @@ router.post('/',
     }
     const { login, password, firstName, lastName, age } = req.body
     try {
-      const user = await UserService.getUser(login)
+      const user = await userService.getUser(login)
       if (user) {
         res.status(400).json({ error: 'User with that username exists' })
       } else {
@@ -27,7 +27,7 @@ router.post('/',
           lastName,
           age
         }
-        await UserService.addUser(user)
+        await userService.addUser(user)
         res.status(200).json({ status: 'success' })
       }
     } catch (error) {
