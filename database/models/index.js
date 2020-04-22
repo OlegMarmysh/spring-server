@@ -9,11 +9,15 @@ let sequelize
 const db = {}
 
 if (process.env.DATABSE_URL) {
+  console.log(process.env.DATABASE_URL)
   sequelize = new Sequelize(process.env.DATABSE_URL,
     {
       dialect: configProduction.dialect,
       protocol: configProduction.protocol,
-      logging: configProduction.logging
+      logging: configProduction.logging,
+      dialectOptions: {
+        ssl: true
+      }
     })
 } else {
   const DB_URL = `postgres://${configDevelopment.username}:${configDevelopment.password}@${configDevelopment.host}/${configDevelopment.database}`
