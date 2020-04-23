@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const userService = require('../database/services/userService')
+const userService = require('../services/UserService')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const consts = require('../consts')

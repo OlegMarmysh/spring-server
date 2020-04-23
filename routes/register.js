@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { validationResult } = require('express-validator')
 const registerValidator = require('../validators/registerValidator')
-const userService = require('../database/services/userService')
+const userService = require('../services/UserService')
 const bcrypt = require('bcryptjs')
 
 const saltRounds = 10
