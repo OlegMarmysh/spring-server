@@ -1,12 +1,35 @@
-'use strict'
-module.exports = (sequelize, DataTypes) => {
-  const SpringProject = sequelize.define('SpringProject', {
-    img: DataTypes.STRING,
-    title: DataTypes.STRING,
-    body: DataTypes.TEXT
-  }, {})
-  SpringProject.associate = function (models) {
-    // associations can be defined here
+const Sequelize = require('sequelize');
+
+module.exports = class SpringProjects extends Sequelize.Model {
+  static init(sequelize, DataTypes) {
+    return super.init(
+      {
+        id: {
+          type: DataTypes.INTEGER,
+          autoIncrement: true,
+          primaryKey: true,
+          allowNull: false,
+        },
+        img: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        title: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        body: {
+          type: DataTypes.TEXT,
+          allowNull: false,
+        },
+      },
+      {
+        tableName: 'SpringProjects',
+        sequelize,
+      },
+    );
   }
-  return SpringProject
-}
+
+  static associate(models) {
+  }
+};

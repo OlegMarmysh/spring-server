@@ -1,23 +1,23 @@
-const db = require('../database/models')
+const db = require('../database/models');
 
 class UserService {
-  async addUser (user) {
+  async addUser(user) {
     try {
-      return await db.User.create(user)
+      return await db.User.create(user);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  async getUser (login) {
+  async getUser(login) {
     try {
-      return await db.User.findOne({ where: { login } })
+      return await db.User.findOne({ where: { login } });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 }
 
-const userService = new UserService()
+const userService = new UserService();
 
-module.exports = userService
+module.exports = userService;

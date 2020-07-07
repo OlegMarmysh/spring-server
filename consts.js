@@ -1,3 +1,3 @@
 module.exports = {
-  signature: 'MySuper_secret'
-}
+  signature: 'MySuper_secret',
+};

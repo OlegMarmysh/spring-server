@@ -1,23 +1,23 @@
-const db = require('../database/models')
+const db = require('../database/models');
 
 class ProjectService {
-  async getSpringProject () {
+  async getSpringProject() {
     try {
-      return await db.SpringProject.findAll()
+      return await db.SpringProjects.findAll();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  async getSpringAtticProject () {
+  async getSpringAtticProject() {
     try {
-      return await db.SpringAtticProject.findAll()
+      return await db.SpringAtticProjects.findAll();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 }
 
-const projectService = new ProjectService()
+const projectService = new ProjectService();
 
-module.exports = projectService
+module.exports = projectService;

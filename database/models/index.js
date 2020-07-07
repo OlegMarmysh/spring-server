@@ -1,41 +1,26 @@
-const fs = require('fs')
-const path = require('path')
-const Sequelize = require('sequelize')
-const configDevelopment = require('../config/config').development
-const configProduction = require('../config/config').production
-const basename = path.basename(__filename)
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const config = require('../config');
 
-let sequelize
-const db = {}
+const env = process.env.NODE_ENV || 'development';
+const databaseUrl = process.env.DATABSE_URL || config[env].url;
 
-if (process.env.DATABSE_URL) {
-  console.log(process.env.DATABASE_URL)
-  sequelize = new Sequelize(process.env.DATABSE_URL,
-    {
-      dialect: configProduction.dialect,
-      protocol: configProduction.protocol,
-      logging: configProduction.logging,
-      dialectOptions: {
-        ssl: true
-      }
-    })
-} else {
-  const DB_URL = `postgres://${configDevelopment.username}:${configDevelopment.password}@${configDevelopment.host}/${configDevelopment.database}`
-  sequelize = new Sequelize(DB_URL,
-    {
-      dialect: configDevelopment.dialect,
-      port: configDevelopment.port
-    })
-}
+const db = new Sequelize(databaseUrl, {
+  dialect: config[env].dialect,
+  define: {
+    timestamps: false,
+  },
+});
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
-  })
-  .forEach(file => {
-    const model = sequelize.import(path.join(__dirname, file))
-    db[model.name] = model
-  })
+fs.readdirSync(__dirname).filter((file) => (file.indexOf('.') !== 0) && (file !== 'index.js'))
+  .forEach((file) => {
+    const model = require(path.join(__dirname, file));
+    model.init(db, Sequelize);
+  });
 
-module.exports = db
+Object.values(db.models)
+  .filter((model) => typeof model.associate === 'function')
+  .forEach((model) => model.associate(db.models));
+
+module.exports = { client: db, ...db.models };

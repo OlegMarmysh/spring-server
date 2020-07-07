@@ -1,4 +1,4 @@
-const { check } = require('express-validator')
+const { check } = require('express-validator');
 
 const registerValidator = [
   check('login')
@@ -15,7 +15,7 @@ const registerValidator = [
     .withMessage('LastName length is more than 3 characters'),
   check('age')
     .isInt({ min: 1 })
-    .withMessage('Invalid age')
-]
+    .withMessage('Invalid age'),
+];
 
-module.exports = registerValidator
+module.exports = registerValidator;
